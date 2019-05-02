@@ -85,6 +85,7 @@ class App extends Component {
                 <TableCell>생년월일</TableCell>
                 <TableCell>성별</TableCell>
                 <TableCell>직업</TableCell>
+                <TableCell>설정</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -93,6 +94,7 @@ class App extends Component {
                 this.state.customers.map(c => {
                   return (
                     <Customer
+                      stateRefresh={this.stateRefresh}
                       key={c.id}
                       id={c.id}
                       image={c.image}
@@ -105,7 +107,7 @@ class App extends Component {
                 }) 
                 :
                 <TableRow>
-                  <TableCell colSpan="6" align="center">
+                  <TableCell colSpan="7" align="center">
                     <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed}></CircularProgress>
                   </TableCell>
                 </TableRow>
