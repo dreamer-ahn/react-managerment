@@ -49,13 +49,11 @@ app.post('/api/customers', upload.single('image'), (req, res) => {
             console.log(err);
         }
     );
-    res.send({message: 'hello Express!'});
 });
 
 app.delete('/api/customers/:id', (req, res) => {
     let sql = 'UPDATE customer set isDelete=1 WHERE id=?';
     let params = [req.params.id];
-    console.log(sql, params);
     connection.query(sql, params, 
         (err, rows, fields) => {
             res.send(rows);
