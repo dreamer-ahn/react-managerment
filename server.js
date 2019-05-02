@@ -20,6 +20,9 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 
+const multer = require('multer');
+const upload = multer({dest: './upload'});
+
 app.get('/api/customers', (req, res) => {
     connection.query(
         "SELECT * FROM customer",
@@ -27,36 +30,25 @@ app.get('/api/customers', (req, res) => {
             res.send(rows);
         }
 
-    )
-
-    // res.send([
-    //     {
-    //       id: 1,
-    //       image: 'https://placeimg.com/64/64/1',
-    //       name: 'dreamer',
-    //       birthday: '860904',
-    //       gender: 'man',
-    //       job: 'dev'
-    //     },
-    //     {
-    //       id: 2,
-    //       image: 'https://placeimg.com/64/64/2',
-    //       name: 'apple',
-    //       birthday: '860904',
-    //       gender: 'man',
-    //       job: 'dev'
-    //     },
-    //     {
-    //       id: 3,
-    //       image: 'https://placeimg.com/64/64/3',
-    //       name: 'orange',
-    //       birthday: '860904',
-    //       gender: 'man',
-    //       job: 'dev'
-    //     }
-    // ]);
+    );
 });
-app.get('/api/hello', (req, res) => {
+
+app.use('/image', express.static('./upload'));
+
+app.post('/api/customers', upload.single('image'), (req, res) => {
+    let sql = 'INSERT INTO customer SET image=?, name=?, birthday=?, gender=?, job=?';
+    let image = '/image/'+req.file.filename;
+    let name = req.body.name;
+    let birthday = req.body.birthday;
+    let gender = req.body.gender;
+    let job = req.body.job;
+    let params = [image, name, birthday, gender, job];
+    connection.query(sql, params,
+        (err, rows, fields) => {
+            res.send(rows);
+            console.log(err);
+        }
+    );
     res.send({message: 'hello Express!'});
 });
 
