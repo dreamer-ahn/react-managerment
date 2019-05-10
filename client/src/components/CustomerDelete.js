@@ -46,7 +46,7 @@ class CustomerDelete extends Component {
                 </DialogContent>
                 <DialogActions>
                     <Button variant="contained" color="primary" onClick={(e) => {this.deleteCustomer(this.props.id)}}>삭제</Button>
-                    <Button variant="outlined" color="primary" onClick={this.handleFormSubmit}>닫기</Button>
+                    <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button>
                 </DialogActions>
             </Dialog>
         </div>
